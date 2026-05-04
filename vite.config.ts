@@ -1,8 +1,11 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/kasaneko/',
+  base: './',
   server: {
     host: true
+  },
+  build: {
+    minify: false
   }
 })

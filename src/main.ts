@@ -7,29 +7,6 @@ const k = kaplay({
   canvas: document.getElementById('game-canvas') as HTMLCanvasElement,
 });
 
-function createDataURL(color1: string, color2?: string, color3?: string): string {
-  const canvas = document.createElement('canvas');
-  canvas.width = 16;
-  canvas.height = 16;
-  const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = color1;
-  ctx.fillRect(0, 0, 16, 16);
-  if (color2) {
-    ctx.fillStyle = color2;
-    ctx.fillRect(0, 12, 16, 4);
-  }
-  if (color3) {
-    ctx.fillStyle = color3;
-    ctx.fillRect(0, 14, 16, 2);
-  }
-  return canvas.toDataURL();
-}
-
-k.loadSprite('ground', createDataURL('#4a4e69', '#3d405b', '#22223b'));
-k.loadSprite('candy', createDataURL('#ff69b4', '#ff1493'));
-k.loadSprite('cat', createDataURL('#ff9966'));
-k.loadSprite('cat-open', createDataURL('#ffcc66'));
-
 const MOVE_SPEED = 200;
 const JUMP_FORCE = 650;
 const MAX_FALL_NORMAL = 500;
@@ -84,7 +61,8 @@ k.scene('game', () => {
   ]);
 
   k.add([
-    k.sprite('candy'),
+    k.circle(8),
+    k.color(k.rgb(255, 105, 180)),
     k.pos(176, groundY - 224),
     k.area(),
     k.anchor('center'),
@@ -143,9 +121,11 @@ k.scene('game', () => {
   player.onUpdate(() => {
     const isGrounded = player.isGrounded();
 
-    const targetSprite = player.umbrellaOpen ? 'cat-open' : 'cat';
-    if (player.sprite !== targetSprite) {
-      player.sprite = targetSprite;
+    // 伞 открыт時のみ少し色を変える
+    if (player.umbrellaOpen) {
+      player.color = k.rgb(255, 204, 102);
+    } else {
+      player.color = k.rgb(255, 153, 102);
     }
 
     if (!isGrounded) {
