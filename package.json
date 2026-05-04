@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "homepage": "https://naosim.github.io/kasaneko/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
